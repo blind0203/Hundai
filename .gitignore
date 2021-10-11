@@ -58,3 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+HundaiProj/Library
+HundaiProj/Temp
+HundaiProj/Logs
