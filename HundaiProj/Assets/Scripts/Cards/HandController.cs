@@ -2,14 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Threading.Tasks;
 
 public class HandController : Singleton<HandController>
 {
     [SerializeField] private GameObject _cardPrefab;
+    [SerializeField] private int _startCardsInHandCount;
 
     private void Start()
     {
-        SetCardsAtPositions();
+        FillHand();
+    }
+
+    public async void FillHand() 
+    {
+        int c = _startCardsInHandCount - transform.childCount;
+
+        for (int i = 0; i < c; i++)
+        {
+            AddCardToHand();
+            await Task.Delay(300);
+        }
     }
 
     public void SetCardsAtPositions() 
@@ -26,8 +39,8 @@ public class HandController : Singleton<HandController>
             card.GetComponent<CardComponent>().StartPosition = pos;
             card.GetComponent<CardComponent>().StartRotation = rot;
 
-            card.DOLocalMove(pos, .5f).SetEase(Ease.OutBack);
-            card.DOLocalRotate(rot, .5f).SetEase(Ease.OutBack);
+            card.DOLocalMove(pos, .25f).SetEase(Ease.OutBack);
+            card.DOLocalRotate(rot, .25f).SetEase(Ease.OutBack);
         }
     }
 
@@ -35,6 +48,8 @@ public class HandController : Singleton<HandController>
     {
         GameObject cardToAdd = Instantiate(_cardPrefab, transform);
 
-        cardToAdd.transform.localPosition = Vector3.down * 300;
+        cardToAdd.transform.localPosition = Vector3.down * 2000;
+
+        SetCardsAtPositions();
     }
 }

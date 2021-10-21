@@ -18,7 +18,7 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     private Vector2 _screenDifference;
     private float _scaleDIfference = .75f;
 
-    private void Start()
+    void Start()
     {
         _image = GetComponent<Image>();
         _camera = Camera.main;
@@ -26,11 +26,6 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         //StartPosition = transform.localPosition;
         _canvas = GetComponentInParent<Canvas>();
         _screenDifference = GetComponentInParent<CardGameManager>().ScreenDifference;
-    }
-
-    private void Update()
-    {
-
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -47,25 +42,29 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         transform.DORotate(Vector3.zero, .1f);
         _image.raycastTarget = false;
+        TableController.Instance.CardInHand = transform;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        /*transform.localPosition = new Vector3(CustomMath.RemapValue(Input.mousePosition.x, 0, _camera.scaledPixelWidth, -Screen.width / 2, Screen.width / 2),
-            CustomMath.RemapValue(Input.mousePosition.y, 0, _camera.scaledPixelHeight, -Screen.height / 2, Screen.height / 2),
-            0);*/
-
         transform.localPosition +=  _handRotation * (Vector3)(eventData.delta * _screenDifference / _scaleDIfference);
-
-        //transform.position = _camera.ScreenToWorldPoint(Input.mousePosition);
-
-        //transform.localPosition = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (GraphRCaster.Instance.TableCheck())
+        {
+            TableController.Instance.HandleCardDrop();
+        }
+
+        else
+        {
+            TableController.Instance.CardInHand = null;
+            
+            transform.DOLocalMove(StartPosition, .1f);
+            transform.DOLocalRotate(StartRotation, .1f);
+        }
+
         _image.raycastTarget = true;
-        transform.DOLocalMove(StartPosition, .1f);
-        transform.DOLocalRotate(StartRotation, .1f);
     }
 }
