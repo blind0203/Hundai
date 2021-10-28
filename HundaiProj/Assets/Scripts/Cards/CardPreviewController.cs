@@ -14,6 +14,14 @@ public class CardPreviewController : Singleton<CardPreviewController>
 
     private List<Tween> _fadeAnimation = new List<Tween>();
 
+    private void Start()
+    {
+        _cardImage.color = Color.clear;
+        _gradientBackground.color = Color.clear;
+        _cardTitleText.color = Color.clear;
+        _cardDescriptionText.color = Color.clear;
+    }
+
     public void ShowCardPreview(CardSO cardData) 
     {
         _currentCardData = cardData;

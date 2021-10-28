@@ -22,6 +22,7 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     private Quaternion _handRotation;
     private Vector2 _screenDifference;
     private float _scaleDIfference = .75f;
+    private bool isDragable = true;
 
     void Start()
     {
@@ -47,32 +48,42 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        transform.DORotate(Vector3.zero, .1f);
-        _image.raycastTarget = false;
-        TableController.Instance.CardInHand = transform;
+        if (isDragable)
+        {
+            transform.DORotate(Vector3.zero, .1f);
+            _image.raycastTarget = false;
+            TableController.Instance.CardInHand = transform;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.localPosition +=  _handRotation * (Vector3)(eventData.delta * _screenDifference / _scaleDIfference);
+        if (isDragable)
+        {
+            transform.localPosition += _handRotation * (Vector3)(eventData.delta * _screenDifference / _scaleDIfference);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (GraphRCaster.Instance.TableCheck())
+        if (isDragable)
         {
-            TableController.Instance.HandleCardDrop();
-        }
+            if (GraphRCaster.Instance.TableCheck())
+            {
+                TableController.Instance.HandleCardDrop();
+                isDragable = false;
+            }
 
-        else
-        {
-            TableController.Instance.CardInHand = null;
-            
-            transform.DOLocalMove(StartPosition, .1f);
-            transform.DOLocalRotate(StartRotation, .1f);
-        }
+            else
+            {
+                TableController.Instance.CardInHand = null;
 
-        _image.raycastTarget = true;
+                transform.DOLocalMove(StartPosition, .1f);
+                transform.DOLocalRotate(StartRotation, .1f);
+            }
+
+            _image.raycastTarget = true;
+        }
     }
 
     public void FillCardDataFields() 
