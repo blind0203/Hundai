@@ -50,6 +50,14 @@ public class HandController : Singleton<HandController>
 
         cardToAdd.transform.localPosition = Vector3.down * 2000;
 
+        SetCardData(cardToAdd.transform.GetComponent<CardComponent>());
+
         SetCardsAtPositions();
+    }
+
+    private void SetCardData(CardComponent cardComponent) 
+    {
+        cardComponent.CardData = Resources.LoadAll<CardSO>("Cards")[Random.Range(0, 2)];
+        cardComponent.FillCardDataFields();
     }
 }

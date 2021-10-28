@@ -10,6 +10,11 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public Vector3 StartPosition;
     public Vector3 StartRotation;
 
+    [HideInInspector] public CardSO CardData;
+
+    [SerializeField] private Text _cardTitle, _cardCostText, _cardDamageText;
+    [SerializeField] private Image _cardImage;
+
     private Canvas _canvas;
     private Camera _camera;
     private Image _image;
@@ -31,11 +36,13 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void OnPointerEnter(PointerEventData eventData)
     {
         _image.color = Color.yellow;
+        CardPreviewController.Instance?.ShowCardPreview(CardData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _image.color = Color.red;
+        CardPreviewController.Instance?.CloseCardPreview();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -66,5 +73,13 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         }
 
         _image.raycastTarget = true;
+    }
+
+    public void FillCardDataFields() 
+    {
+        _cardTitle.text = CardData.CardName;
+        _cardCostText.text = "" + CardData.CardCost;
+        _cardDamageText.text = "" + CardData.CardDamage;
+        _cardImage.sprite = CardData.CardPicture;
     }
 }
