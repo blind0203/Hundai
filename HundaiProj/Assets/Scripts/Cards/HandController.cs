@@ -9,8 +9,11 @@ public class HandController : Singleton<HandController>
     [SerializeField] private GameObject _cardPrefab;
     [SerializeField] private int _startCardsInHandCount;
 
+    private CardSO[] cardsResources = new CardSO[0];
+
     private void Start()
     {
+        cardsResources = Resources.LoadAll<CardSO>("Cards");
         FillHand();
     }
 
@@ -57,7 +60,7 @@ public class HandController : Singleton<HandController>
 
     private void SetCardData(CardComponent cardComponent) 
     {
-        cardComponent.CardData = Resources.LoadAll<CardSO>("Cards")[Random.Range(0, 2)];
+        cardComponent.CardData = cardsResources[Random.Range(0, cardsResources.Length)];
         cardComponent.FillCardDataFields();
     }
 }

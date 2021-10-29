@@ -14,6 +14,8 @@ public class CardPreviewController : Singleton<CardPreviewController>
 
     private List<Tween> _fadeAnimation = new List<Tween>();
 
+    private bool _isActive = true;
+
     private void Start()
     {
         _cardImage.color = Color.clear;
@@ -22,15 +24,23 @@ public class CardPreviewController : Singleton<CardPreviewController>
         _cardDescriptionText.color = Color.clear;
     }
 
-    public void ShowCardPreview(CardSO cardData) 
+    public void ToogleActivity(bool active) 
     {
-        _currentCardData = cardData;
+        _isActive = active;
+    }
 
-        _cardImage.sprite = _currentCardData.CardPicture;
-        _cardTitleText.text = "" + _currentCardData.CardName;
-        _cardDescriptionText.text = "" + _currentCardData.CardDescription;
+    public void ShowCardPreview(CardSO cardData)
+    {
+        if (_isActive)
+        {
+            _currentCardData = cardData;
 
-        FadeInAnimation();
+            _cardImage.sprite = _currentCardData.CardPicture;
+            _cardTitleText.text = "" + _currentCardData.CardName;
+            _cardDescriptionText.text = "" + _currentCardData.CardDescription;
+
+            FadeInAnimation();
+        }
     }
 
     public void CloseCardPreview() 
@@ -50,13 +60,13 @@ public class CardPreviewController : Singleton<CardPreviewController>
             _fadeAnimation = new List<Tween>();
         }
 
-        _fadeAnimation.Add(_cardImage.DOColor(Color.white, .1f).OnComplete(() => 
+        _fadeAnimation.Add(_cardImage.DOColor(Color.white, .2f).SetDelay(1f).OnComplete(() => 
         {
             _fadeAnimation = new List<Tween>();
         }));
-        _fadeAnimation.Add(_gradientBackground.DOColor(new Color(0, 0, 0, .5f), .1f));
-        _fadeAnimation.Add(_cardTitleText.DOColor(Color.black, .1f));
-        _fadeAnimation.Add(_cardDescriptionText.DOColor(Color.black, .1f));
+        _fadeAnimation.Add(_gradientBackground.DOColor(new Color(0, 0, 0, .5f), .1f).SetDelay(1f));
+        _fadeAnimation.Add(_cardTitleText.DOColor(Color.black, .2f).SetDelay(1f));
+        _fadeAnimation.Add(_cardDescriptionText.DOColor(Color.black, .2f).SetDelay(1f));
     }
 
     private void FadeOutAnimation() 

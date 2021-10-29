@@ -42,7 +42,7 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _image.color = Color.red;
+        _image.color = Color.white;
         CardPreviewController.Instance?.CloseCardPreview();
     }
 

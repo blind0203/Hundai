@@ -23,6 +23,8 @@ public class TableController : Singleton<TableController>
 
     public async void EndTurn() 
     {
+        CardPreviewController.Instance?.ToogleActivity(false);
+
         int cardCount = transform.childCount;
 
         for (int i = 0; i < cardCount; i++)
@@ -32,6 +34,8 @@ public class TableController : Singleton<TableController>
         }
 
         HandController.Instance.FillHand();
+
+        CardPreviewController.Instance?.ToogleActivity(true);
     }
 
     private void SetCardsPositionsOnTable() 
