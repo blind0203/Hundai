@@ -28,7 +28,7 @@ public class CameraComponent : Singleton<CameraComponent>
 
         Vector2 mouseDisplace = mousePositionOnViewport - Vector2.one / 2;
 
-        if (Mathf.Abs(mouseDisplace.x) > .45f || Mathf.Abs(mouseDisplace.y) > .45f)
+        if (Mathf.Abs(mouseDisplace.x) > .49f || Mathf.Abs(mouseDisplace.y) > .49f)
         {
             _speedToLerp = Mathf.Lerp(_speedToLerp, _camSpeed, Time.deltaTime);
             MoveCamera(mouseDisplace);

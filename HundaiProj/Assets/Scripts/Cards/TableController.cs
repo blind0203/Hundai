@@ -29,7 +29,11 @@ public class TableController : Singleton<TableController>
 
         for (int i = 0; i < cardCount; i++)
         {
-            Destroy(transform.GetChild(0).gameObject);
+            CardComponent cc = transform.GetChild(0).transform.GetComponent<CardComponent>();
+
+            EnemyController.Instance?.TakeDamage(cc.CardData);
+
+            Destroy(cc.gameObject);
             await Task.Delay(300);
         }
 

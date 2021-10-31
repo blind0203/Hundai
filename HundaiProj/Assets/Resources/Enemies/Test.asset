@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98731262fe7d0d54a922ab0d2090e820, type: 3}
-  m_Name: TestCard 2
+  m_Script: {fileID: 11500000, guid: 8a40ebcddc1407e4c9b4f0c67fd71109, type: 3}
+  m_Name: Test
   m_EditorClassIdentifier: 
-  CardName: as
-  CardDescription: asdggg
-  CardDamage: 123
-  CardCost: 2
-  CardCategory: 1
-  CardPicture: {fileID: 21300000, guid: 0005a4ba207636f468d274ac1018125a, type: 3}
+  PositiveCategoty: 0
+  NegativeCategoty: 1
