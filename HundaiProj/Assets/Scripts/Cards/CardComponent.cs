@@ -36,13 +36,13 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _image.color = Color.yellow;
+        _cardImage.color = new Color(0.95f, 0.95f, 0.95f, 1);
         CardPreviewController.Instance?.ShowCardPreview(CardData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _image.color = Color.white;
+        _cardImage.color = Color.white;
         CardPreviewController.Instance?.CloseCardPreview();
     }
 
@@ -91,6 +91,11 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         _cardTitle.text = CardData.CardName;
         _cardCostText.text = "" + CardData.CardCost;
         _cardDamageText.text = "" + CardData.CardDamage;
+
+        float sizeK = CardData.CardPicture.rect.width / CardData.CardPicture.rect.height;
+
+        _cardImage.rectTransform.sizeDelta = new Vector2(500 * sizeK, 500);
+
         _cardImage.sprite = CardData.CardPicture;
     }
 }

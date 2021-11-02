@@ -36,4 +36,17 @@ public class EnemyController : Singleton<EnemyController>
     {
         
     }
+
+    public void EnemyTurnSequence() 
+    {
+        if (true) // действие при первом ходе
+        {
+
+        }
+
+        else // действие при втором ходе
+        {
+
+        }
+    }
 }

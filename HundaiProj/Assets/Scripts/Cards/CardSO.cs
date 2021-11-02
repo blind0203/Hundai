@@ -10,7 +10,14 @@ public class CardSO : ScriptableObject
     public int CardDamage;
     public int CardCost;
     public CardCategory CardCategory;
+    public CardType CardType;
     public Sprite CardPicture;
+    public int CardID;
+}
+
+public enum CardType 
+{
+    Pose, Action
 }
 
 public enum CardCategory 
