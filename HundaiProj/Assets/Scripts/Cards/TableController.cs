@@ -23,7 +23,13 @@ public class TableController : Singleton<TableController>
 
     public async void EndTurn() 
     {
-        
+
+        if (CardGameManager.Instance.TurnState == 0)
+        {
+            StartCoroutine(MoveTableUpForActionState());
+
+            CardGameManager.Instance.NextTurnState();
+        }
 
         /*CardPreviewController.Instance?.ToogleActivity(false);
 
@@ -44,6 +50,29 @@ public class TableController : Singleton<TableController>
         CardPreviewController.Instance?.ToogleActivity(true);*/
     }
 
+    public IEnumerator MoveTableUpForActionState() 
+    {
+        bool f = false;
+
+        transform.DOLocalMoveY(267f, .25f).OnComplete(() =>
+        {
+            f = true;
+        });
+
+        yield return new WaitWhile(() => f == false);
+
+        int cardCount = transform.childCount;
+
+        for (int i = 0; i < cardCount; i++)
+        {
+            Transform card = transform.GetChild(i).transform;
+
+            card.GetComponent<CardComponent>().ShowActionSlot();
+
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+
     private void SetCardsPositionsOnTable() 
     {
         int cardCount = transform.childCount;
@@ -52,7 +81,7 @@ public class TableController : Singleton<TableController>
         {
             Transform card = transform.GetChild(i).transform;
 
-            Vector3 pos = new Vector3((i - cardCount / 2) * (card.GetComponent<RectTransform>().rect.width / 2), 0, 0);
+            Vector3 pos = new Vector3((i - cardCount / 2) * (card.GetComponent<RectTransform>().rect.width * .9f), 0, 0);
 
             card.DOLocalMove(pos, .25f).SetEase(Ease.OutBack);
         }

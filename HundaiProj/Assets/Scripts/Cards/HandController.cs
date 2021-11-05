@@ -60,6 +60,16 @@ public class HandController : Singleton<HandController>
 
     private void SetCardData(CardComponent cardComponent) 
     {
+        if (CardGameManager.Instance.TurnState == 0)
+        {
+
+        }
+
+        else
+        {
+            
+        }
+
         cardComponent.CardData = cardsResources[Random.Range(0, cardsResources.Length)];
         cardComponent.FillCardDataFields();
     }

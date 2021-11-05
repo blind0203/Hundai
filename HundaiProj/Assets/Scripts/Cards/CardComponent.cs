@@ -13,7 +13,8 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     [HideInInspector] public CardSO CardData;
 
     [SerializeField] private Text _cardTitle, _cardCostText, _cardDamageText;
-    [SerializeField] private Image _cardImage;
+    [SerializeField] private Image _cardImage, _actionSlotImage;
+    [SerializeField] private CardActionSlotComponent _cardActionSlotComponent;
 
     private Canvas _canvas;
     private Camera _camera;
@@ -97,5 +98,13 @@ public class CardComponent : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         _cardImage.rectTransform.sizeDelta = new Vector2(500 * sizeK, 500);
 
         _cardImage.sprite = CardData.CardPicture;
+    }
+
+    public void ShowActionSlot() 
+    {
+        _actionSlotImage.DOColor(new Color(.5f, 1f, 1f, .25f), .2f).OnComplete(() => 
+        {
+            _actionSlotImage.raycastTarget = true;
+        });
     }
 }

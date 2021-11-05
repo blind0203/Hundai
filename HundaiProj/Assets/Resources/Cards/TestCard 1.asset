@@ -17,4 +17,6 @@ MonoBehaviour:
   CardDamage: 2
   CardCost: 1
   CardCategory: 1
+  CardType: 0
   CardPicture: {fileID: 21300000, guid: 762d85c526fb27640891314219e40665, type: 3}
+  CardID: 2
