@@ -17,6 +17,11 @@ public class CardGameManager : Singleton<CardGameManager>
         ScreenDifference = GetComponent<CanvasScaler>().referenceResolution / new Vector2(Screen.width, Screen.height);
     }
 
+    private void Start()
+    {
+        StartGame();
+    }
+
     public void StartGame() 
     {
         TurnCount = Random.Range(0, 2);
@@ -26,7 +31,7 @@ public class CardGameManager : Singleton<CardGameManager>
 
     public void HandleTurn() 
     {
-        if (TurnCount % 2 == 0) // Инициатива игрока
+        if (IsPlayerTurn()) // Инициатива игрока
         {
             PlayerPoseTurn();
         }
@@ -37,10 +42,17 @@ public class CardGameManager : Singleton<CardGameManager>
         }
     }
 
+    public bool IsPlayerTurn() 
+    {
+        return TurnCount % 2 == 0;
+    }
+
     private void PlayerPoseTurn() 
     {
         {
             //Действия игрока
+
+            HandController.Instance.ShowHand();
         }
 
         EnemyActionTurn();
@@ -99,14 +111,19 @@ public class CardGameManager : Singleton<CardGameManager>
 
         TurnState = TurnState > 1 ? 0 : 1;
 
-        if(TurnState == 0) 
+        if(IsPoseTurnState()) 
         {
             //Стадия поз
         }
 
-        else if( TurnState == 1) 
+        else 
         {
             //Стадия действий
         }
+    }
+
+    public bool IsPoseTurnState() 
+    {
+        return TurnState % 2 == 0;
     }
 }

@@ -21,14 +21,30 @@ public class TableController : Singleton<TableController>
         SetCardsPositionsOnTable();
     }
 
-    public async void EndTurn() 
+    public /*async*/ void EndTurn() 
     {
+        CardGameManager cgm = CardGameManager.Instance;
 
-        if (CardGameManager.Instance.TurnState == 0)
+        if (cgm.IsPoseTurnState())
         {
             StartCoroutine(MoveTableUpForActionState());
+        }
 
-            CardGameManager.Instance.NextTurnState();
+        else 
+        {
+
+        }
+
+        if (cgm.IsPlayerTurn())
+        {
+            cgm.HidePlayerHand();
+            cgm.ShowEnemyHand();
+        }
+
+        else
+        {
+            cgm.HideEnemyHand();
+            cgm.ShowPlayerHand();
         }
 
         /*CardPreviewController.Instance?.ToogleActivity(false);

@@ -73,4 +73,14 @@ public class HandController : Singleton<HandController>
         cardComponent.CardData = cardsResources[Random.Range(0, cardsResources.Length)];
         cardComponent.FillCardDataFields();
     }
+
+    public void ShowHand() 
+    {
+        transform.DOMoveY(0, .25f).SetEase(Ease.OutBack).SetDelay(.5f);
+    }
+
+    public void HideHand() 
+    {
+        transform.DOMoveY(-800, .25f).SetEase(Ease.InBack);
+    }
 }
